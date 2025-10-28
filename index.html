@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Osaka University - Profil Sekolah</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .logo svg {
+            width: 80px;
+            height: 80px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 20px;
+            background: #f8fafc;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #1e40af;
+            margin-bottom: 20px;
+            font-size: 2em;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 10px;
+        }
+
+        .org-chart {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .kepala {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .wakil {
+            background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card h3 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .program-card {
+            background: #f8fafc;
+            border-left: 5px solid #3b82f6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .program-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .program-card h3 {
+            color: #1e40af;
+            margin-bottom: 10px;
+        }
+
+        .visi-card {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .student-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .student-item {
+            background: #f8fafc;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #3b82f6;
+            transition: all 0.3s;
+        }
+
+        .student-item:hover {
+            background: #3b82f6;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .history-text {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 10px;
+            line-height: 1.8;
+            text-align: justify;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .gender-section {
+            margin: 30px 0;
+        }
+
+        .gender-header {
+            background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px 10px 0 0;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .male-header {
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+        }
+
+        .female-header {
+            background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" fill="#1e40af" stroke="#3b82f6" stroke-width="3"/>
+                    <text x="50" y="40" font-size="28" font-weight="bold" fill="white" text-anchor="middle">大阪</text>
+                    <text x="50" y="65" font-size="16" fill="#60a5fa" text-anchor="middle">OSAKA</text>
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="5,5"/>
+                </svg>
+            </div>
+            <h1>OSAKA UNIVERSITY</h1>
+            <p>大阪大学 - Excellence in Education</p>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="nav-btn active" onclick="showSection('beranda')">🏠 Beranda</button>
+            <button class="nav-btn" onclick="showSection('sejarah')">📜 Sejarah</button>
+            <button class="nav-btn" onclick="showSection('organisasi')">👥 Struktur Organisasi</button>
+            <button class="nav-btn" onclick="showSection('visi')">🎯 Visi</button>
+            <button class="nav-btn" onclick="showSection('program')">📚 Program Unggulan</button>
+            <button class="nav-btn" onclick="showSection('siswa')">👨‍🎓 Data Siswa</button>
+        </div>
+
+        <div class="content">
+            <!-- Beranda -->
+            <div id="beranda" class="section active">
+                <h2>Selamat Datang di Osaka University</h2>
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <h3>120</h3>
+                        <p>Total Siswa</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>60</h3>
+                        <p>Siswa Laki-Laki</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>60</h3>
+                        <p>Siswa Perempuan</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>5</h3>
+                        <p>Program Unggulan</p>
+                    </div>
+                </div>
+                <div class="visi-card">
+                    <h3 style="color: white; border: none;">🌟 Tentang Kami</h3>
+                    <p>Osaka University adalah institusi pendidikan tinggi yang berdedikasi untuk menghasilkan lulusan berkualitas dengan standar internasional. Kami menawarkan berbagai program unggulan yang dirancang untuk mempersiapkan mahasiswa menghadapi tantangan global.</p>
+                </div>
+            </div>
+
+            <!-- Sejarah -->
+            <div id="sejarah" class="section">
+                <h2>📜 Sejarah Osaka University</h2>
+                <div class="history-text">
+                    <p><strong>Osaka University</strong> didirikan pada tahun 1931 sebagai salah satu universitas kekaisaran terkemuka di Jepang. Sejak awal pendiriannya, universitas ini telah berkomitmen untuk menjadi pusat keunggulan akademik dan penelitian yang berkontribusi pada kemajuan ilmu pengetahuan dan teknologi.</p>
+                    <br>
+                    <p>Berawal dari sekolah kedokteran yang didirikan pada era Meiji, Osaka University berkembang menjadi institusi pendidikan komprehensif yang mencakup berbagai disiplin ilmu. Dengan motto "Live Locally, Grow Globally," universitas ini telah menghasilkan ribuan lulusan yang berkontribusi di berbagai bidang, baik di Jepang maupun internasional.</p>
+                    <br>
+                    <p>Pada dekade terakhir, Osaka University semakin memperkuat posisinya sebagai universitas riset kelas dunia. Melalui kolaborasi internasional dan inovasi berkelanjutan, universitas ini terus beradaptasi dengan perkembangan zaman sambil mempertahankan nilai-nilai tradisional pendidikan Jepang yang menekankan pada keunggulan, integritas, dan kontribusi kepada masyarakat.</p>
+                    <br>
+                    <p>Saat ini, Osaka University memiliki kampus-kampus modern dengan fasilitas penelitian canggih, perpustakaan yang lengkap, dan lingkungan akademik yang mendukung perkembangan mahasiswa secara holistik. Universitas ini terus menjadi pilihan utama bagi mahasiswa domestik dan internasional yang ingin mendapatkan pendidikan berkualitas tinggi.</p>
+                </div>
+            </div>
+
+            <!-- Struktur Organisasi -->
+            <div id="organisasi" class="section">
+                <h2>👥 Struktur Organisasi</h2>
+                <div class="org-chart">
+                    <div class="kepala">
+                        <h3>👨‍💼 Kepala Sekolah</h3>
+                        <h2>Li Wei (李伟)</h2>
+                    </div>
+                    <div style="height: 30px; width: 2px; background: #3b82f6; margin: 0 auto;"></div>
+                    <div class="wakil">
+                        <h3>👨‍💼 Wakil Kepala Sekolah</h3>
+                        <h2>Zhang Mei (张美)</h2>
+                    </div>
+                </div>
+
+                <h2 style="margin-top: 50px;">👨‍🏫 Daftar 20 Guru</h2>
+                <div class="teacher-grid">
+                    <div class="teacher-card">
+                        <div class="teacher-number">1</div>
+                        <h4>Shinichi Suzuki</h4>
+                        <p>Pencipta Metode Suzuki untuk musik</p>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="teacher-number">2</div>
+                        <h4>Toyohiko Kagawa</h4>
+                        <p>Pendeta dan guru sosial</p>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="teacher-number">3</div>
+                        <h4>Makoto Shinkai</h4>
+                        <p>Pengajar dan mentor seni/animasi</p>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="teacher-number">4</div>
+                        <h4>Chie Nakane</h4>
+                        <p>Antropolog dan pengajar universitas</p>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="teacher-number">5</div>
+                        <h4>Keiji Nishitani</h4>
+                        <p>Guru filsafat Zen</p>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="teacher-number">6</div>
+                        <h4>Susumu Nishibe</h4>
+                        <p>Pengajar pemikiran sosial</p>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="teacher-number">7</div>
+                        <h4>Masao Maruyama</h4>
+                        <p>Teoretikus politik dan pengajar</p>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="teacher-number">8</div>
+                        <h4>Tetsuro Watsuji</h4>
+                        <p>Guru etika dan filsafat</p>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="teacher-number">9</div>
+                        <h4>Kanzo Uchimura</h4>
+                        <p>Pendidik Kristen dan pengajar moral</p>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="teacher-number">10</div>
+                        <h4>Motoori Norinaga</h4>
+                        <p>Pakar sastra klasik dan guru</p>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="teacher-number">11</div>
+                        <h4>Kitaro Nishida</h4>
+                        <p>Filsuf dan guru universitas</p>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="teacher-number">12</div>
+                        <h4>Fukuzawa Yukichi</h4>
+                        <p>Pendiri sekolah modern dan pengajar</p>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="teacher-number">13</div>
+                        <h4>Hajime Kawakami</h4>
+                        <p>Guru ekonomi dan pemikir sosial</p>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="teacher-number">14</div>
+                        <h4>Kazuo Inamori</h4>
+                        <p>Mentor etika kerja dan pendidikan manajemen</p>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="teacher-number">15</div>
+                        <h4>Keiko Fujimori</h4>
+                        <p>Pengajar bahasa Jepang dan budaya</p>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="teacher-number">16</div>
+                        <h4>Yukio Mishima</h4>
+                        <p>Guru sastra dan filosofi</p>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="teacher-number">17</div>
+                        <h4>Nakae Chōmin</h4>
+                        <p>Guru politik modern</p>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="teacher-number">18</div>
+                        <h4>Kumazawa Banzan</h4>
+                        <p>Guru Konfusianisme Jepang</p>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="teacher-number">19</div>
+                        <h4>Hiroshi Sugimoto</h4>
+                        <p>Pengajar seni dan fotografi</p>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="teacher-number">20</div>
+                        <h4>Haruki Murakami</h4>
+                        <p>Penulis dan mentor, aktif memberikan kuliah</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visi -->
+            <div id="visi" class="section">
+                <h2>🎯 Visi Osaka University</h2>
+                <div class="program-card">
+                    <h3>1. Keunggulan Akademik Global</h3>
+                    <p>Menjadi universitas riset terkemuka yang menghasilkan lulusan berkualitas tinggi dengan kompetensi global dan kemampuan berpikir kritis untuk menghadapi tantangan masa depan.</p>
+                </div>
+                <div class="program-card">
+                    <h3>2. Inovasi dan Penelitian Berkelanjutan</h3>
+                    <p>Mendorong budaya inovasi dan penelitian interdisipliner yang berkontribusi pada kemajuan ilmu pengetahuan, teknologi, dan kesejahteraan masyarakat global.</p>
+                </div>
+                <div class="program-card">
+                    <h3>3. Kolaborasi Internasional</h3>
+                    <p>Membangun jaringan kolaborasi yang kuat dengan institusi pendidikan dan industri terkemuka di seluruh dunia untuk meningkatkan kualitas pendidikan dan penelitian.</p>
+                </div>
+                <div class="program-card">
+                    <h3>4. Pengembangan Karakter dan Kepemimpinan</h3>
+                    <p>Membentuk individu yang tidak hanya cerdas secara intelektual, tetapi juga memiliki integritas, empati, dan kemampuan kepemimpinan yang kuat untuk membawa perubahan positif di masyarakat.</p>
+                </div>
+                <div class="program-card">
+                    <h3>5. Keberlanjutan dan Tanggung Jawab Sosial</h3>
+                    <p>Menjalankan pendidikan yang berorientasi pada keberlanjutan lingkungan dan tanggung jawab sosial, menghasilkan lulusan yang peduli terhadap isu-isu global dan berkontribusi pada pembangunan berkelanjutan.</p>
+                </div>
+            </div>
+
+            <!-- Program Unggulan -->
+            <div id="program" class="section">
+                <h2>📚 Program Unggulan</h2>
+                <div class="program-card">
+                    <h3>1. International Undergraduate Program in Science (IUPS)</h3>
+                    <p>Program sarjana internasional yang diajarkan sepenuhnya dalam bahasa Inggris, mencakup matematika, fisika, kimia, dan biologi. Mahasiswa mendapatkan pengalaman riset langsung dan kesempatan berpartisipasi dalam kegiatan ekstrakurikuler yang beragam.</p>
+                </div>
+                <div class="program-card">
+                    <h3>2. Human Sciences International Undergraduate Degree Program</h3>
+                    <p>Program yang dirancang untuk mahasiswa internasional dengan fokus pada ilmu sosial dan humaniora, termasuk psikologi, sosiologi, dan antropologi. Diajarkan dalam bahasa Inggris dengan pendekatan interdisipliner yang komprehensif.</p>
+                </div>
+                <div class="program-card">
+                    <h3>3. Intensive Japanese Language Course (IJ)</h3>
+                    <p>Kursus bahasa Jepang intensif selama 15 minggu dengan tiga tingkat: pemula, menengah, dan lanjutan. Program ini mempersiapkan mahasiswa internasional untuk melanjutkan studi pascasarjana dengan kemampuan bahasa Jepang yang mumpuni.</p>
+                </div>
+                <div class="program-card">
+                    <h3>4. Japanese Language and Culture Courses (JA/JGU)</h3>
+                    <p>Program komprehensif yang menggabungkan pembelajaran bahasa Jepang tingkat lanjut dengan mata kuliah interdisipliner, termasuk komunikasi akademik dan pengembangan karier melalui pemahaman mendalam tentang bahasa dan budaya Jepang.</p>
+                </div>
+                <div class="program-card">
+                    <h3>5. MEXT Scholarship Program</h3>
+                    <p>Beasiswa Monbukagakusho untuk mahasiswa internasional yang mencakup biaya kuliah penuh, tunjangan hidup, dan tiket pesawat pulang-pergi. Tersedia untuk program sarjana, magister, dan doktoral dengan seleksi ketat berdasarkan prestasi akademik.</p>
+                </div>
+            </div>
+
+            <!-- Data Siswa -->
+            <div id="siswa" class="section">
+                <h2>👨‍🎓 Data Siswa</h2>
+                
+                <div class="gender-section">
+                    <div class="gender-header male-header">👨‍🎓 Daftar 60 Siswa Laki-Laki</div>
+                    <div class="student-list">
+                        <div class="student-item">1. Wang Jun</div>
+                        <div class="student-item">2. Li Hao</div>
+                        <div class="student-item">3. Zhang Wei</div>
+                        <div class="student-item">4. Chen Ming</div>
+                        <div class="student-item">5. Liu Yang</div>
+                        <div class="student-item">6. Zhao Lei</div>
+                        <div class="student-item">7. Huang Bo</div>
+                        <div class="student-item">8. Lin Tao</div>
+                        <div class="student-item">9. Xu Jian</div>
+                        <div class="student-item">10. Sun Qiang</div>
+                        <div class="student-item">11. Deng Yu</div>
+                        <div class="student-item">12. Ma Rui</div>
+                        <div class="student-item">13. Tang Hao</div>
+                        <div class="student-item">14. Gao Bin</div>
+                        <div class="student-item">15. Luo Jie</div>
+                        <div class="student-item">16. Peng Fei</div>
+                        <div class="student-item">17. He Liang</div>
+                        <div class="student-item">18. Zhou Kai</div>
+                        <div class="student-item">19. Fang Chen</div>
+                        <div class="student-item">20. Yuan Lei</div>
+                        <div class="student-item">21. Guo Han</div>
+                        <div class="student-item">22. Qian Xin</div>
+                        <div class="student-item">23. Shen Long</div>
+                        <div class="student-item">24. Yu Peng</div>
+                        <div class="student-item">25. Wu Jian</div>
+                        <div class="student-item">26. Xiao Ming</div>
+                        <div class="student-item">27. Han Rui</div>
+                        <div class="student-item">28. Nie Qiang</div>
+                        <div class="student-item">29. Cheng Wei</div>
+                        <div class="student-item">30. Tan Yu</div>
+                        <div class="student-item">31. Long Bo</div>
+                        <div class="student-item">32. Song Jian</div>
+                        <div class="student-item">33. Zeng Hao</div>
+                        <div class="student-item">34. Cai Ming</div>
+                        <div class="student-item">35. Ren Bin</div>
+                        <div class="student-item">36. Duan Chen</div>
+                        <div class="student-item">37. Jin Feng</div>
+                        <div class="student-item">38. Kong Jie</div>
+                        <div class="student-item">39. Bai Lei</div>
+                        <div class="student-item">40. Hu Jun</div>
+                        <div class="student-item">41. Deng Qiang</div>
+                        <div class="student-item">42. Li Yong</div>
+                        <div class="student-item">43. Zhou Peng</div>
+                        <div class="student-item">44. Luo Fei</div>
+                        <div class="student-item">45. Gao Liang</div>
+                        <div class="student-item">46. Xu Bin</div>
+                        <div class="student-item">47. Chen Tao</div>
+                        <div class="student-item">48. Wang Rui</div>
+                        <div class="student-item">49. Lin Hao</div>
+                        <div class="student-item">50. Qiu Zhen</div>
+                        <div class="student-item">51. Zhang Kai</div>
+                        <div class="student-item">52. Sun Jie</div>
+                        <div class="student-item">53. Ma Yu</div>
+                        <div class="student-item">54. Wu Feng</div>
+                        <div class="student-item">55. Zhao Bin</div>
+                        <div class="student-item">56. Tang Liang</div>
+                        <div class="student-item">57. He Qiang</div>
+                        <div class="student-item">58. Liu Peng</div>
+                        <div class="student-item">59. Yang Chen</div>
+                        <div class="student-item">60. Huang Jun</div>
+                    </div>
+                </div>
+
+                <div class="gender-section">
+                    <div class="gender-header female-header">👩‍🎓 Daftar 60 Siswa Perempuan</div>
+                    <div class="student-list">
+                        <div class="student-item">1. Li Na</div>
+                        <div class="student-item">2. Zhang Jing</div>
+                        <div class="student-item">3. Chen Mei</div>
+                        <div class="student-item">4. Wang Yu</div>
+                        <div class="student-item">5. Liu Fang</div>
+                        <div class="student-item">6. Zhao Ling</div>
+                        <div class="student-item">7. Lin Yue</div>
+                        <div class="student-item">8. Huang Xiu</div>
+                        <div class="student-item">9. Xu Lan</div>
+                        <div class="student-item">10. Sun Ying</div>
+                        <div class="student-item">11. Deng Li</div>
+                        <div class="student-item">12. Ma Xue</div>
+                        <div class="student-item">13. Tang Fei</div>
+                        <div class="student-item">14. Gao Min</div>
+                        <div class="student-item">15. Luo Ning</div>
+                        <div class="student-item">16. Peng Xin</div>
+                        <div class="student-item">17. He Yan</div>
+                        <div class="student-item">18. Zhou Hui</div>
+                        <div class="student-item">19. Fang Mei</div>
+                        <div class="student-item">20. Yuan Qing</div>
+                        <div class="student-item">21. Guo Lin</div>
+                        <div class="student-item">22. Qian Mei</div>
+                        <div class="student-item">23. Shen Yue</div>
+                        <div class="student-item">24. Yu Xuan</div>
+                        <div class="student-item">25. Wu Lan</div>
+                        <div class="student-item">26. Xiao Jing</div>
+                        <div class="student-item">27. Han Qian</div>
+                        <div class="student-item">28. Nie Fang</div>
+                        <div class="student-item">29. Cheng Li</div>
+                        <div class="student-item">30. Tan Xiu</div>
+                        <div class="student-item">31. Long Mei</div>
+                        <div class="student-item">32. Song Yun</div>
+                        <div class="student-item">33. Zeng Li</div>
+                        <div class="student-item">34. Cai Xue</div>
+                        <div class="student-item">35. Ren Jing</div>
+                        <div class="student-item">36. Duan Lin</div>
+                        <div class="student-item">37. Jin Yue</div>
+                        <div class="student-item">38. Kong Xiu</div>
+                        <div class="student-item">39. Bai Mei</div>
+                        <div class="student-item">40. Hu Ling</div>
+                        <div class="student-item">41. Deng Yan</div>
+                        <div class="student-item">42. Li Qian</div>
+                        <div class="student-item">43. Zhou Xuan</div>
+                        <div class="student-item">44. Luo Jing</div>
+                        <div class="student-item">45. Gao Xin</div>
+                        <div class="student-item">46. Xu Fei</div>
+                        <div class="student-item">47. Chen Yan</div>
+                        <div class="student-item">48. Wang Mei</div>
+                        <div class="student-item">49. Lin Xue</div>
+                        <div class="student-item">50. Qiu Hui</div>
+                        <div class="student-item">51. Zhang Min</div>
+                        <div class="student-item">52. Sun Xian</div>
+                        <div class="student-item">53. Ma Yue</div>
+                        <div class="student-item">54. Wu Ling</div>
+                        <div class="student-item">55. Zhao Hui</div>
+                        <div class="student-item">56. Tang Mei</div>
+                        <div class="student-item">57. He Jing</div>
+                        <div class="student-item">58. Liu Ying</div>
+                        <div class="student-item">59. Yang Li</div>
+                        <div class="student-item">60. Huang Yan</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
